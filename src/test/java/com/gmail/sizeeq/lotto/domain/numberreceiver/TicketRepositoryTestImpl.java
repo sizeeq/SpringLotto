@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class NumberReceiverRepositoryTestImpl implements NumberReceiverRepository {
+class TicketRepositoryTestImpl implements TicketRepository {
 
     Map<String, Ticket> inMemoryDatabase = new ConcurrentHashMap<>();
 
     @Override
     public Ticket save(Ticket ticket) {
-        inMemoryDatabase.put(ticket.ticketId(), ticket);
+        inMemoryDatabase.put(ticket.hash(), ticket);
         return ticket;
     }
 
@@ -20,5 +20,10 @@ public class NumberReceiverRepositoryTestImpl implements NumberReceiverRepositor
         return inMemoryDatabase.values().stream()
                 .filter(ticket -> ticket.drawDate().equals(date))
                 .toList();
+    }
+
+    @Override
+    public Ticket findByHash(String hash) {
+        return inMemoryDatabase.get(hash);
     }
 }
