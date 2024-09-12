@@ -1,0 +1,7 @@
+//Klient podaje 6 liczb
+//Liczby muszą być w zakresie od 1 do 99
+//Liczby nie mogą się powtarzać
+//Klient dostaje informację o dacie losowania
+//Klient dostaje informację o swoim unikalnym identyfikatorze losowania
+//Klient może sprawdzić, czy wygrał (dostaje informację ile liczb, udało mu się trafić)
+//Losowania odbywają się co soboty o 12:00
