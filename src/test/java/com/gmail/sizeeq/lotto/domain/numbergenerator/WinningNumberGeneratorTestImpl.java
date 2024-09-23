@@ -1,5 +1,7 @@
 package com.gmail.sizeeq.lotto.domain.numbergenerator;
 
+import com.gmail.sizeeq.lotto.domain.numbergenerator.dto.SixRandomNumbersDto;
+
 import java.util.Set;
 
 public class WinningNumberGeneratorTestImpl implements RandomNumberGenerable {
@@ -15,7 +17,9 @@ public class WinningNumberGeneratorTestImpl implements RandomNumberGenerable {
     }
 
     @Override
-    public Set<Integer> generateSixNumbers() {
-        return generatedNumbers;
+    public SixRandomNumbersDto generateSixNumbers() {
+        return SixRandomNumbersDto.builder()
+                .numbers(generatedNumbers)
+                .build();
     }
 }

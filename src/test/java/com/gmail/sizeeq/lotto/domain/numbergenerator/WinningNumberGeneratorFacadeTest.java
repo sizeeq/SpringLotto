@@ -22,7 +22,7 @@ class WinningNumberGeneratorFacadeTest {
     @Test
     public void should_return_set_of_required_size() {
         //given
-        RandomNumberGenerable generator = new RandomGenerator();
+        RandomNumberGenerable generator = new SecureRandomGenerator();
         when(numberReceiverFacade.retrieveNextDrawDate()).thenReturn(LocalDateTime.now());
         WinningNumberGeneratorFacade winningNumberGeneratorFacade = new NumberGeneratorConfiguration().createWinningNumberGeneratorFacadeForTest(generator, winningNumbersRepository, numberReceiverFacade);
 
@@ -36,7 +36,7 @@ class WinningNumberGeneratorFacadeTest {
     @Test
     public void should_return_set_of_required_size_with_numbers_within_required_range() {
         //given
-        RandomNumberGenerable generator = new RandomGenerator();
+        RandomNumberGenerable generator = new SecureRandomGenerator();
         when(numberReceiverFacade.retrieveNextDrawDate()).thenReturn(LocalDateTime.now());
         WinningNumberGeneratorFacade winningNumberGeneratorFacade = new NumberGeneratorConfiguration().createWinningNumberGeneratorFacadeForTest(generator, winningNumbersRepository, numberReceiverFacade);
 
@@ -67,7 +67,7 @@ class WinningNumberGeneratorFacadeTest {
     @Test
     public void should_return_set_with_unique_numbers() {
         //given
-        RandomNumberGenerable generator = new RandomGenerator();
+        RandomNumberGenerable generator = new SecureRandomGenerator();
         when(numberReceiverFacade.retrieveNextDrawDate()).thenReturn(LocalDateTime.now());
         WinningNumberGeneratorFacade winningNumberGeneratorFacade = new NumberGeneratorConfiguration().createWinningNumberGeneratorFacadeForTest(generator, winningNumbersRepository, numberReceiverFacade);
 
@@ -92,7 +92,7 @@ class WinningNumberGeneratorFacadeTest {
                 .winningNumbers(numberFromUser)
                 .build();
         winningNumbersRepository.save(winningNumbers);
-        RandomNumberGenerable generator = new RandomGenerator();
+        RandomNumberGenerable generator = new SecureRandomGenerator();
         when(numberReceiverFacade.retrieveNextDrawDate()).thenReturn(drawDate);
         WinningNumberGeneratorFacade winningNumberGeneratorFacade = new NumberGeneratorConfiguration().createWinningNumberGeneratorFacadeForTest(generator, winningNumbersRepository, numberReceiverFacade);
 
@@ -112,7 +112,7 @@ class WinningNumberGeneratorFacadeTest {
     public void should_throw_an_exception_when_failed_to_retrieve_numbers_by_date() {
         //given
         LocalDateTime drawDate = LocalDateTime.of(2024, 9, 12, 12, 0, 0);
-        RandomNumberGenerable generator = new RandomGenerator();
+        RandomNumberGenerable generator = new SecureRandomGenerator();
         when(numberReceiverFacade.retrieveNextDrawDate()).thenReturn(drawDate);
         WinningNumberGeneratorFacade winningNumberGeneratorFacade = new NumberGeneratorConfiguration().createWinningNumberGeneratorFacadeForTest(generator, winningNumbersRepository, numberReceiverFacade);
 
