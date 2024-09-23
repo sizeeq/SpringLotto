@@ -1,12 +1,12 @@
 package com.gmail.sizeeq.lotto.domain.numbergenerator;
 
+import com.gmail.sizeeq.lotto.domain.numbergenerator.dto.SixRandomNumbersDto;
 import com.gmail.sizeeq.lotto.domain.numbergenerator.dto.WinningNumbersDto;
 import com.gmail.sizeeq.lotto.domain.numbergenerator.exception.WinningNumbersNotFoundException;
 import com.gmail.sizeeq.lotto.domain.numberreceiver.NumberReceiverFacade;
 import lombok.AllArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @AllArgsConstructor
 public class WinningNumberGeneratorFacade {
@@ -18,12 +18,12 @@ public class WinningNumberGeneratorFacade {
 
     public WinningNumbersDto generateWinningNumbers() {
         LocalDateTime nextDrawDate = numberReceiver.retrieveNextDrawDate();
-        Set<Integer> winningNumbers = randomNumberGenerator.generateSixNumbers();
-        winningNumberValidator.validateNumbers(winningNumbers);
+        SixRandomNumbersDto winningNumbers = randomNumberGenerator.generateSixNumbers();
+        winningNumberValidator.validateNumbers(winningNumbers.numbers());
 
         WinningNumbers numbersToSave = WinningNumbers.builder()
                 .date(nextDrawDate)
-                .winningNumbers(winningNumbers)
+                .winningNumbers(winningNumbers.numbers())
                 .build();
         numbersRepository.save(numbersToSave);
 

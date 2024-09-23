@@ -1,8 +1,8 @@
 package com.gmail.sizeeq.lotto.domain.numbergenerator;
 
-import java.util.Set;
+import com.gmail.sizeeq.lotto.domain.numbergenerator.dto.SixRandomNumbersDto;
 
 public interface RandomNumberGenerable {
 
-    Set<Integer> generateSixNumbers();
+    SixRandomNumbersDto generateSixNumbers();
 }
