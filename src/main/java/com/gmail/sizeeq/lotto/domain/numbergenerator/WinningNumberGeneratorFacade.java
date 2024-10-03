@@ -15,10 +15,11 @@ public class WinningNumberGeneratorFacade {
     private final RandomNumberGenerable randomNumberGenerator;
     private final WinningNumbersRepository numbersRepository;
     private final NumberReceiverFacade numberReceiver;
+    private final WinningFacadeProperties properties;
 
     public WinningNumbersDto generateWinningNumbers() {
         LocalDateTime nextDrawDate = numberReceiver.retrieveNextDrawDate();
-        SixRandomNumbersDto winningNumbers = randomNumberGenerator.generateSixNumbers();
+        SixRandomNumbersDto winningNumbers = randomNumberGenerator.generateSixNumbers(properties.numberCount(), properties.lowestNumber(), properties.highestNumber());
         winningNumberValidator.validateNumbers(winningNumbers.numbers());
 
         WinningNumbers numbersToSave = WinningNumbers.builder()

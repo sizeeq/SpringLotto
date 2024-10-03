@@ -14,7 +14,7 @@ class SecureRandomGenerator implements RandomNumberGenerable {
     private final int RANDOM_NUMBER_BOUND = (UPPER_BOUND - LOWER_BOUND) + 1;
 
     @Override
-    public SixRandomNumbersDto generateSixNumbers() {
+    public SixRandomNumbersDto generateSixNumbers(int count, int lowerBound, int upperBound) {
         Set<Integer> winingNumbers = new HashSet<>();
         while (isNumberCountLowerThanSix(winingNumbers)) {
             int randomNumber = generateRandomNumber();
