@@ -4,6 +4,7 @@ lotto:
       numberCount: 25
       lowestNumber: 1
       highestNumber: 99
+    lotteryRunOccurrence: "0 0 12 * * 6"
     http:
       client:
         config:
