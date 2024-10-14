@@ -4,5 +4,5 @@ import com.gmail.sizeeq.lotto.domain.numbergenerator.dto.SixRandomNumbersDto;
 
 public interface RandomNumberGenerable {
 
-    SixRandomNumbersDto generateSixNumbers(int count, int lowerBound, int upperBound);
+    SixRandomNumbersDto generateSixRandomNumbers(int count, int lowerBand, int upperBand);
 }

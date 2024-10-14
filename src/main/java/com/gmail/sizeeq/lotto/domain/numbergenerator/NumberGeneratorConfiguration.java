@@ -10,7 +10,7 @@ public class NumberGeneratorConfiguration {
     @Bean
     WinningNumberGeneratorFacade winningNumberGeneratorFacade(WinningNumbersRepository winningNumbersRepository, NumberReceiverFacade numberReceiverFacade, RandomNumberGenerable randomNumberGenerator, WinningFacadeProperties properties) {
         WinningNumberValidator winningNumberValidator = new WinningNumberValidator();
-        return new WinningNumberGeneratorFacade(randomNumberGenerator, winningNumberValidator, winningNumbersRepository, numberReceiverFacade, properties);
+        return new WinningNumberGeneratorFacade(winningNumberValidator, randomNumberGenerator, winningNumbersRepository, numberReceiverFacade, properties);
     }
 
     WinningNumberGeneratorFacade createWinningNumberGeneratorFacadeForTest(RandomNumberGenerable numberGenerator, WinningNumbersRepository repository, NumberReceiverFacade numberReceiverFacade) {

@@ -38,7 +38,7 @@ public class RandomGeneratorClientConfig {
             @Value("${lotto.number-generator.http.client.config.port:5057}") int port,
             WinningFacadeProperties properties
     ) {
-        return new RandomNumberGeneratorRestTemplate(restTemplate, uri, port, properties);
+        return new RandomNumberGeneratorRestTemplate(restTemplate, uri, port);
     }
 }
 

@@ -4,15 +4,19 @@ lotto:
       numberCount: 25
       lowestNumber: 1
       highestNumber: 99
+    lotteryRunOccurrence: "0 0 12 * * 6"
     http:
       client:
         config:
           connectionTimeout: 5000
           readTimeout: 5000
           port: 9090
-          uri: http://ec2-3-120-147-150.eu-central-1.compute.amazonaws.com
+          uri: http://www.randomnumberapi.com
+#          uri: http://ec2-3-120-147-150.eu-central-1.compute.amazonaws.com
 
 spring:
+  main:
+    allow-bean-definition-overriding: true
   application:
     name: lotto
   data:

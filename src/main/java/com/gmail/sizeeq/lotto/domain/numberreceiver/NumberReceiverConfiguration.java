@@ -1,12 +1,31 @@
 package com.gmail.sizeeq.lotto.domain.numberreceiver;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 import java.time.Clock;
 
+@Configuration
 public class NumberReceiverConfiguration {
 
-    NumberReceiverFacade createNumberReceiverFacadeForTest(HashGenerable hashGenerator, Clock clock, TicketRepository ticketRepository) {
+    @Bean
+    Clock clock() {
+        return Clock.systemUTC();
+    }
+
+    @Bean
+    HashGenerable hashGenerable() {
+        return new HashGenerator();
+    }
+
+    @Bean
+    NumberReceiverFacade numberReceiverFacade(HashGenerable hashGenerator, Clock clock, TicketRepository ticketRepository) {
         NumberValidator numberValidator = new NumberValidator();
-        DrawDateGenerator drawDateGenerator = new DrawDateGenerator(clock);
-        return new NumberReceiverFacade(numberValidator, drawDateGenerator, hashGenerator, ticketRepository);
+        DrawDateGenerator dateGenerator = new DrawDateGenerator(clock);
+        return new NumberReceiverFacade(numberValidator, dateGenerator, hashGenerator, ticketRepository);
+    }
+
+    NumberReceiverFacade createNumberReceiverFacadeForTest(HashGenerable hashGenerator, Clock clock, TicketRepository ticketRepository) {
+        return numberReceiverFacade(hashGenerator, clock, ticketRepository);
     }
 }
