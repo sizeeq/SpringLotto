@@ -19,18 +19,18 @@ public class WinningNumberGeneratorFacade {
 
     public WinningNumbersDto generateWinningNumbers() {
         LocalDateTime nextDrawDate = numberReceiver.retrieveNextDrawDate();
-        SixRandomNumbersDto winningNumbers = randomNumberGenerator.generateSixNumbers(properties.numberCount(), properties.lowestNumber(), properties.highestNumber());
+        SixRandomNumbersDto winningNumbers = randomNumberGenerator.generateSixRandomNumbers(properties.numberCount(), properties.lowestNumber(), properties.highestNumber());
         winningNumberValidator.validateNumbers(winningNumbers.numbers());
 
         WinningNumbers numbersToSave = WinningNumbers.builder()
                 .date(nextDrawDate)
                 .winningNumbers(winningNumbers.numbers())
                 .build();
-        numbersRepository.save(numbersToSave);
+        WinningNumbers save = numbersRepository.save(numbersToSave);
 
         return WinningNumbersDto.builder()
-                .winningNumbers(numbersToSave.winningNumbers())
-                .date(nextDrawDate)
+                .winningNumbers(save.winningNumbers())
+                .date(save.date())
                 .build();
     }
 

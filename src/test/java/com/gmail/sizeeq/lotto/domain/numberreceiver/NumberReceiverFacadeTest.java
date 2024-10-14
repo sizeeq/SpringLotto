@@ -1,6 +1,6 @@
 package com.gmail.sizeeq.lotto.domain.numberreceiver;
 
-import com.gmail.sizeeq.lotto.AdjustableClock;
+import com.gmail.sizeeq.lotto.domain.AdjustableClock;
 import com.gmail.sizeeq.lotto.domain.numberreceiver.dto.NumberReceiverResponseDto;
 import com.gmail.sizeeq.lotto.domain.numberreceiver.dto.TicketDto;
 import org.junit.jupiter.api.Test;

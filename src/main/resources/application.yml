@@ -11,9 +11,12 @@ lotto:
           connectionTimeout: 5000
           readTimeout: 5000
           port: 9090
-          uri: http://ec2-3-120-147-150.eu-central-1.compute.amazonaws.com
+          uri: http://www.randomnumberapi.com
+#          uri: http://ec2-3-120-147-150.eu-central-1.compute.amazonaws.com
 
 spring:
+  main:
+    allow-bean-definition-overriding: true
   application:
     name: lotto
   data:

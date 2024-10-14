@@ -1,4 +1,4 @@
-package com.gmail.sizeeq.lotto;
+package com.gmail.sizeeq.lotto.domain;
 
 import java.time.*;
 

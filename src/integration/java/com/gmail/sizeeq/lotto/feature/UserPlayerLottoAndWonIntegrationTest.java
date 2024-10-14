@@ -36,29 +36,25 @@ public class UserPlayerLottoAndWonIntegrationTest extends BaseIntegrationTest {
                                 """.trim()
                         )));
 
-//    step 2: System generated winning numbers for draw date 19.11.2022 12:00
-        //given
+//    step 2: System fetched winning numbers for draw date 19.11.2022 12:00
+        // given
         LocalDateTime drawDate = LocalDateTime.of(2022, 11, 19, 12, 0, 0);
-
-        //when
+        // when && then
         await()
                 .atMost(Duration.ofSeconds(20))
                 .pollInterval(Duration.ofSeconds(1))
-                .until(
-                        () -> {
+                .until(() -> {
                             try {
-                                return !winningNumberGeneratorFacade.generateWinningNumbers().getWinningNumbers().isEmpty();
+                                return !winningNumberGeneratorFacade.retrieveWinningNumbersByDate(drawDate).getWinningNumbers().isEmpty();
                             } catch (WinningNumbersNotFoundException e) {
                                 return false;
                             }
                         }
                 );
-
-        //then
-
 //    step 3: User made POST /inputNumbers with 6 numbers (1,2,3,4,5,6) at 16-11-2022 and system returned 200 (OK) ->
 //            -> with message: "success" and Ticket (DrawDate: 19.11.2022 12:00 (Saturday), TicketId: sampleTicketId)
 //    step 4: 3 days and 1 minute passed, and it is 1 minute after draw date (19.11.2022, 12:01)
+
 //    step 5: System fetched results for ticketId: sampleTicketId with draw date (19.11.2022 12:00, and saved it into database with 6 hits)
 //    step 6: 3 hours passed, and it is 1 minuted after announcement time (19.11.2022, 15:01)
 //    step 7: User made GET /results/sampleTicketId and system returned 200 (OK)
