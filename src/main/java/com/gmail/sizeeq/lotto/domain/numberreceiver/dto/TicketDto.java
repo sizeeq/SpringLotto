@@ -6,5 +6,9 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Builder
-public record TicketDto(LocalDateTime drawDate, String hash, Set<Integer> numbersFromUser) {
+public record TicketDto(
+        LocalDateTime drawDate,
+        String hash,
+        Set<Integer> numbersFromUser
+) {
 }

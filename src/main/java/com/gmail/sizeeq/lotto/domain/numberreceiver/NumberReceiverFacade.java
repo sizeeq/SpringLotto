@@ -37,7 +37,6 @@ public class NumberReceiverFacade {
                 .drawDate(generatedTicket.drawDate())
                 .numberFromUser(generatedTicket.numbersFromUser())
                 .build();
-
         ticketRepository.save(savedTicket);
 
         return new NumberReceiverResponseDto(generatedTicket, ValidationResult.INPUT_SUCCESS.message);

@@ -1,6 +1,6 @@
 package com.gmail.sizeeq.lotto.domain.numberreceiver;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -11,9 +11,10 @@ class NumberValidator {
     private static final int LOWER_BOUND = 1;
     private static final int UPPER_BOUND = 99;
 
-    List<ValidationResult> errors = new ArrayList<>();
+    List<ValidationResult> errors;
 
     List<ValidationResult> validate(Set<Integer> numbersFromUser) {
+        errors = new LinkedList<>();
         if (!isNumberSizeEqualSix(numbersFromUser)) {
             errors.add(ValidationResult.NOT_SIX_NUMBERS_GIVEN);
         }
