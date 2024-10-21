@@ -26,7 +26,7 @@ class ResultAnnouncerFacadeTest {
     public void should_return_response_with_lose_message_if_ticket_did_not_win() {
         //given
         LocalDateTime drawDate = LocalDateTime.of(2024, 9, 14, 12, 0, 0);
-        ResultAnnouncerFacade resultAnnouncerFacade = new ResultAnnouncerConfiguration().createResultAnnouncerFacadeForTests(resultCheckerFacade, responseRepository, Clock.systemUTC());
+        ResultAnnouncerFacade resultAnnouncerFacade = new ResultAnnouncerConfiguration().resultAnnouncerFacade(resultCheckerFacade, responseRepository, Clock.systemUTC());
         String hash = "123";
         ResultDto resultDto = ResultDto.builder()
                 .hash(hash)
@@ -56,7 +56,7 @@ class ResultAnnouncerFacadeTest {
     public void should_return_response_with_win_message_if_ticket_won() {
         //given
         LocalDateTime drawDate = LocalDateTime.of(2024, 9, 14, 12, 0, 0);
-        ResultAnnouncerFacade resultAnnouncerFacade = new ResultAnnouncerConfiguration().createResultAnnouncerFacadeForTests(resultCheckerFacade, responseRepository, Clock.systemUTC());
+        ResultAnnouncerFacade resultAnnouncerFacade = new ResultAnnouncerConfiguration().resultAnnouncerFacade(resultCheckerFacade, responseRepository, Clock.systemUTC());
         String hash = "123";
         ResultDto resultDto = ResultDto.builder()
                 .hash(hash)
@@ -87,7 +87,7 @@ class ResultAnnouncerFacadeTest {
         //given
         LocalDateTime drawDate = LocalDateTime.of(2024, 9, 14, 12, 0, 0);
         Clock clock = Clock.fixed(LocalDateTime.of(2024, 9, 13, 12, 0, 0).toInstant(ZoneOffset.UTC), ZoneId.of("UTC"));
-        ResultAnnouncerFacade resultAnnouncerFacade = new ResultAnnouncerConfiguration().createResultAnnouncerFacadeForTests(resultCheckerFacade, responseRepository, clock);
+        ResultAnnouncerFacade resultAnnouncerFacade = new ResultAnnouncerConfiguration().resultAnnouncerFacade(resultCheckerFacade, responseRepository, clock);
 
         String hash = "123";
 
@@ -119,7 +119,7 @@ class ResultAnnouncerFacadeTest {
     public void should_return_response_with_hash_does_not_exist_message_if_hash_does_not_exist() {
         //given
         String hash = "123";
-        ResultAnnouncerFacade resultAnnouncerFacade = new ResultAnnouncerConfiguration().createResultAnnouncerFacadeForTests(resultCheckerFacade, responseRepository, Clock.systemUTC());
+        ResultAnnouncerFacade resultAnnouncerFacade = new ResultAnnouncerConfiguration().resultAnnouncerFacade(resultCheckerFacade, responseRepository, Clock.systemUTC());
         when(resultCheckerFacade.findByHash(hash)).thenReturn(null);
 
         //when
@@ -144,7 +144,7 @@ class ResultAnnouncerFacadeTest {
                 .build();
         when(resultCheckerFacade.findByHash(hash)).thenReturn(resultDto);
 
-        ResultAnnouncerFacade resultAnnouncerFacade = new ResultAnnouncerConfiguration().createResultAnnouncerFacadeForTests(resultCheckerFacade, responseRepository, Clock.systemUTC());
+        ResultAnnouncerFacade resultAnnouncerFacade = new ResultAnnouncerConfiguration().resultAnnouncerFacade(resultCheckerFacade, responseRepository, Clock.systemUTC());
         ResultAnnouncerResponseDto resultAnnouncerResponseDto = resultAnnouncerFacade.checkResult(hash);
         String hashTest = resultAnnouncerResponseDto.responseDto().hash();
 

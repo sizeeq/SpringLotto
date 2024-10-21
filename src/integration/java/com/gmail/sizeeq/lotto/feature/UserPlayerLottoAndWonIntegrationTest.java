@@ -5,14 +5,25 @@ import com.gmail.sizeeq.lotto.BaseIntegrationTest;
 import com.gmail.sizeeq.lotto.domain.numbergenerator.RandomNumberGenerable;
 import com.gmail.sizeeq.lotto.domain.numbergenerator.WinningNumberGeneratorFacade;
 import com.gmail.sizeeq.lotto.domain.numbergenerator.exception.WinningNumbersNotFoundException;
+import com.gmail.sizeeq.lotto.domain.numberreceiver.dto.NumberReceiverResponseDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 public class UserPlayerLottoAndWonIntegrationTest extends BaseIntegrationTest {
 
@@ -23,7 +34,7 @@ public class UserPlayerLottoAndWonIntegrationTest extends BaseIntegrationTest {
     WinningNumberGeneratorFacade winningNumberGeneratorFacade;
 
     @Test
-    public void user_should_win_and_system_should_generate_winners() {
+    public void user_should_win_and_system_should_generate_winners() throws Exception {
 
 //    step 1: External server returns six random numbers (1,2,3,4,5,6)
         //given
@@ -53,11 +64,48 @@ public class UserPlayerLottoAndWonIntegrationTest extends BaseIntegrationTest {
                 );
 //    step 3: User made POST /inputNumbers with 6 numbers (1,2,3,4,5,6) at 16-11-2022 and system returned 200 (OK) ->
 //            -> with message: "success" and Ticket (DrawDate: 19.11.2022 12:00 (Saturday), TicketId: sampleTicketId)
-//    step 4: 3 days and 1 minute passed, and it is 1 minute after draw date (19.11.2022, 12:01)
+        //given
+        //when
+        ResultActions performPostInputNumbers = mockMvc.perform(post("/inputNumbers")
+                .content("""
+                        {
+                        "inputNumbers": [1,2,3,4,5,6]
+                        }
+                        """)
+                .contentType(MediaType.APPLICATION_JSON)
+        );
 
-//    step 5: System fetched results for ticketId: sampleTicketId with draw date (19.11.2022 12:00, and saved it into database with 6 hits)
-//    step 6: 3 hours passed, and it is 1 minuted after announcement time (19.11.2022, 15:01)
-//    step 7: User made GET /results/sampleTicketId and system returned 200 (OK)
+        //then
+        MvcResult mvcResult = performPostInputNumbers.andExpect(status().isOk()).andReturn();
+        String json = mvcResult.getResponse().getContentAsString();
+        NumberReceiverResponseDto numberReceiverResponseDto = objectMapper.readValue(json, NumberReceiverResponseDto.class);
+
+        assertAll(
+                () -> assertThat(numberReceiverResponseDto.ticketDto().drawDate()).isEqualTo(drawDate),
+                () -> assertThat(numberReceiverResponseDto.ticketDto().hash()).isNotNull(),
+                () -> assertThat(numberReceiverResponseDto.message()).isEqualTo("Success!")
+        );
+
+
+//    step 4: User made GET /results/notExistingId and system returned 404(NOT FOUND) and body with (message: Not found for id notExistingId and status NOT_FOUND)
+        //given
+        //when
+        ResultActions performResultWithNotExistingID = mockMvc.perform(get("/results/" + "notExistingId"));
+        //then
+        performResultWithNotExistingID.andExpect(status().isNotFound())
+                .andExpect(content().json(
+                        """
+                                {
+                                "message": "Not found for id: notExistingId",
+                                "status": "NOT_FOUND"
+                                }
+                                """.trim()
+                ));
+
+//    step 5: 3 days and 1 minute passed, and it is 1 minute after draw date (19.11.2022, 12:01)
+//    step 6: System fetched results for ticketId: sampleTicketId with draw date (19.11.2022 12:00, and saved it into database with 6 hits)
+//    step 7: 3 hours passed, and it is 1 minuted after announcement time (19.11.2022, 15:01)
+//    step 8: User made GET /results/sampleTicketId and system returned 200 (OK)
     }
 
 }

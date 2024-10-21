@@ -15,71 +15,28 @@ import java.util.function.Function;
 
 public class WinningNumberRepositoryTestImpl implements WinningNumbersRepository {
 
-    private final Map<LocalDateTime, WinningNumbers> winningNumbersDatabase = new ConcurrentHashMap<>();
+    private final Map<LocalDateTime, WinningNumbers> winningNumbersList = new ConcurrentHashMap<>();
+
+    @Override
+    public <S extends WinningNumbers> S save(S entity) {
+        winningNumbersList.put(entity.date(), entity);
+        return entity;
+    }
 
     @Override
     public Optional<WinningNumbers> findNumbersByDate(LocalDateTime date) {
-        return Optional.ofNullable(winningNumbersDatabase.get(date));
+        return Optional.ofNullable(winningNumbersList.get(date));
     }
 
     @Override
     public boolean existsByDate(LocalDateTime nextDrawDate) {
-        return winningNumbersDatabase.get(nextDrawDate) != null;
-    }
-
-    @Override
-    public WinningNumbers save(WinningNumbers winningNumbers) {
-        return winningNumbersDatabase.put(winningNumbers.date(), winningNumbers);
-    }
-
-    @Override
-    public <S extends WinningNumbers> S insert(S entity) {
-        return null;
-    }
-
-    @Override
-    public <S extends WinningNumbers> List<S> insert(Iterable<S> entities) {
-        return List.of();
-    }
-
-    @Override
-    public <S extends WinningNumbers> Optional<S> findOne(Example<S> example) {
-        return Optional.empty();
-    }
-
-    @Override
-    public <S extends WinningNumbers> List<S> findAll(Example<S> example) {
-        return List.of();
-    }
-
-    @Override
-    public <S extends WinningNumbers> List<S> findAll(Example<S> example, Sort sort) {
-        return List.of();
-    }
-
-    @Override
-    public <S extends WinningNumbers> Page<S> findAll(Example<S> example, Pageable pageable) {
-        return null;
-    }
-
-    @Override
-    public <S extends WinningNumbers> long count(Example<S> example) {
-        return 0;
-    }
-
-    @Override
-    public <S extends WinningNumbers> boolean exists(Example<S> example) {
-        return false;
-    }
-
-    @Override
-    public <S extends WinningNumbers, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
-        return null;
+        winningNumbersList.get(nextDrawDate);
+        return true;
     }
 
     @Override
     public <S extends WinningNumbers> List<S> saveAll(Iterable<S> entities) {
-        return List.of();
+        return null;
     }
 
     @Override
@@ -94,12 +51,12 @@ public class WinningNumberRepositoryTestImpl implements WinningNumbersRepository
 
     @Override
     public List<WinningNumbers> findAll() {
-        return List.of();
+        return null;
     }
 
     @Override
     public List<WinningNumbers> findAllById(Iterable<String> strings) {
-        return List.of();
+        return null;
     }
 
     @Override
@@ -134,11 +91,56 @@ public class WinningNumberRepositoryTestImpl implements WinningNumbersRepository
 
     @Override
     public List<WinningNumbers> findAll(Sort sort) {
-        return List.of();
+        return null;
     }
 
     @Override
     public Page<WinningNumbers> findAll(Pageable pageable) {
+        return null;
+    }
+
+    @Override
+    public <S extends WinningNumbers> S insert(S entity) {
+        return null;
+    }
+
+    @Override
+    public <S extends WinningNumbers> List<S> insert(Iterable<S> entities) {
+        return null;
+    }
+
+    @Override
+    public <S extends WinningNumbers> Optional<S> findOne(Example<S> example) {
+        return Optional.empty();
+    }
+
+    @Override
+    public <S extends WinningNumbers> List<S> findAll(Example<S> example) {
+        return null;
+    }
+
+    @Override
+    public <S extends WinningNumbers> List<S> findAll(Example<S> example, Sort sort) {
+        return null;
+    }
+
+    @Override
+    public <S extends WinningNumbers> Page<S> findAll(Example<S> example, Pageable pageable) {
+        return null;
+    }
+
+    @Override
+    public <S extends WinningNumbers> long count(Example<S> example) {
+        return 0;
+    }
+
+    @Override
+    public <S extends WinningNumbers> boolean exists(Example<S> example) {
+        return false;
+    }
+
+    @Override
+    public <S extends WinningNumbers, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
         return null;
     }
 }
